@@ -3,7 +3,6 @@
 from importlib import import_module
 from os.path import abspath, join, dirname
 
-# from scrapy import signals
 from scrapy.exceptions import NotConfigured
 from scrapy.http import HtmlResponse
 from selenium.webdriver.support.ui import WebDriverWait
