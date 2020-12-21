@@ -20,7 +20,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install FireFox 🦊 and geckodriver 🦎
+    - name: Install FireFox 🦊 and GeckoDriver 🦎
       run: |
         apt install firefox
         wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
