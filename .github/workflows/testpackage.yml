@@ -17,13 +17,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install FireFox 🦊 and GeckoDriver 🦎
-      run: |
-        sudo apt install -y firefox
-        wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
-        sh -c 'tar -x geckodriver -zf geckodriver-v0.24.0-linux64.tar.gz -O > /usr/bin/geckodriver'
-        chmod +x /usr/bin/geckodriver
-        rm geckodriver-v0.24.0-linux64.tar.gz
     - name: Upgrade pip
       run: |
         python -m pip install --upgrade pip
