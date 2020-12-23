@@ -3,7 +3,7 @@
 Scrapy middleware to handle dynamic web pages, using Selenium and running in headless mode by default:
 
 1. Running in headless mode by default
-2. Running by default with ad blocking browser plugin, for faster scraping
+2. Running by default with ad blocking browser plugin, for faster scraping (only for FireFox, see [this issue](https://bugs.chromium.org/p/chromium/issues/detail?id=706008#c5))
 3. Dynamic responses, to allow interaction with the web page being scraped
 
 ## Installation
