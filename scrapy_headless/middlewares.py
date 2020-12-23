@@ -31,6 +31,7 @@ class SeleniumMiddleware:
         """
 
         webdriver_base_path = f'selenium.webdriver.{driver_name}'
+        self.driver_name = driver_name
 
         driver_class_module = import_module(f'{webdriver_base_path}.webdriver')
         self.driver_class = getattr(driver_class_module, 'WebDriver')
@@ -73,7 +74,7 @@ class SeleniumMiddleware:
             return None
 
         driver = self.driver_class(**self.driver_kwargs)
-        if self._block_ads:
+        if self.driver_name == 'firefox' and self._block_ads:
             addon_path = join(dirname(abspath(__file__)), 'uBlock0@raymondhill.net.xpi')
             driver.install_addon(addon_path, temporary=True)
         driver.get(request.url)
