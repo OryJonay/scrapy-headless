@@ -3,6 +3,7 @@ import pytest
 import scrapy
 from scrapy.crawler import Crawler
 
+
 class TestSpider(scrapy.Spider):
     name = 'test_spider'
     allowed_domains = ['python.org']

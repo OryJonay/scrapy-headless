@@ -25,6 +25,7 @@ def test_process_request_method_should_initialize_the_driver(crawler):
     # Close the driver
     html_response.meta.get('driver').close()
 
+
 def test_process_spider_output_should_close_the_driver(crawler):
     """Test that the ``process_spider_output`` method should close the driver"""
     selenium_middleware = SeleniumMiddleware.from_crawler(crawler)
@@ -35,11 +36,13 @@ def test_process_spider_output_should_close_the_driver(crawler):
     mocked_quit.assert_called_once()
     html_response.meta.get('driver').quit()
 
+
 def test_process_request_should_return_none_if_not_selenium_request(crawler):
     """Test that the ``process_request`` should return none if not selenium request"""
     selenium_middleware = SeleniumMiddleware.from_crawler(crawler)
     scrapy_request = Request(url='http://not-an-url')
     assert selenium_middleware.process_request(request=scrapy_request, spider=None) is None
+
 
 def test_process_request_should_return_a_response_if_selenium_request(crawler):  # FIX
     """Test that the ``process_request`` should return a response if selenium request"""
@@ -55,6 +58,7 @@ def test_process_request_should_return_a_response_if_selenium_request(crawler): 
 
     html_response.meta.get('driver').quit()
 
+
 def test_process_request_should_return_a_screenshot_if_screenshot_option(crawler):
     """Test that the ``process_request`` should return a response with a screenshot"""
     selenium_middleware = SeleniumMiddleware.from_crawler(crawler)
@@ -63,6 +67,7 @@ def test_process_request_should_return_a_screenshot_if_screenshot_option(crawler
     assert html_response.meta['screenshot'] is not None
     html_response.meta.get('driver').quit()
 
+
 def test_process_request_should_execute_script_if_script_option(crawler):
     """Test that the ``process_request`` should execute the script and return a response"""
     selenium_middleware = SeleniumMiddleware.from_crawler(crawler)
@@ -70,6 +75,7 @@ def test_process_request_should_execute_script_if_script_option(crawler):
     html_response = selenium_middleware.process_request(request=selenium_request, spider=None)
     assert html_response.selector.xpath('//title/text()').extract_first() == 'scrapy_selenium'
     html_response.meta.get('driver').quit()
+
 
 @pytest.mark.flaky(max_runs=3, min_passes=1)
 def test_middleware_should_filter_ads(crawler):
