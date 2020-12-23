@@ -1,5 +1,5 @@
 """This module contains the test cases for the middlewares of the ``scrapy_headless`` package"""
-
+import pytest
 from unittest.mock import patch
 
 from scrapy import Request
@@ -71,6 +71,7 @@ def test_process_request_should_execute_script_if_script_option(crawler):
     assert html_response.selector.xpath('//title/text()').extract_first() == 'scrapy_selenium'
     html_response.meta.get('driver').quit()
 
+@pytest.mark.flaky(max_runs=3, min_passes=1)
 def test_middleware_should_filter_ads(crawler):
     selenium_middleware = SeleniumMiddleware.from_crawler(crawler)
     selenium_request = SeleniumRequest(url='http://www.yahoo.com')
