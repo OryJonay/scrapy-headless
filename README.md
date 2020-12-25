@@ -57,6 +57,14 @@ def parse_result(self, response):
     print(response.selector.xpath('//title/@text'))
 ```
 
+The Selenium WebDriver is also exposed through the `response.interact` property, to allow interaction with the browser.
+The response also implements a `click` method which excepts a CSS / XPATH selector, to click on an element and return a new response with the new body:
+```python
+def parse_result(self, response):
+    response = response.click('#id')  # equivalent to response.click('//[@id="id"]')
+    print(response.selector.xpath('//title/@text'))  # searches the reloaded response body
+```
+
 ### Additional arguments
 The `scrapy_headless.SeleniumRequest` accept 4 additional arguments:
 
