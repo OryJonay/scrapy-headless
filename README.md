@@ -8,7 +8,7 @@ Scrapy middleware to handle dynamic web pages, using Selenium and running in hea
 
 ## Installation
 ```
-$ pip install scrapy-headless
+$ pip install scrapy-headless-selenium
 ```
 You should use **python>=3.6**.
 You will also need one of the Selenium compatible browsers and drivers (FireFox & geckodriver or Chrome & chromium-driver).
