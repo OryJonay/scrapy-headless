@@ -1,6 +1,10 @@
 """This module contains the ``SeleniumRequest`` class"""
 
 from scrapy import Request
+from scrapy.http import HtmlResponse
+from parsel.csstranslator import HTMLTranslator
+from cssselect.parser import SelectorSyntaxError
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class SeleniumRequest(Request):
@@ -30,3 +34,23 @@ class SeleniumRequest(Request):
         self.script = script
 
         super().__init__(*args, **kwargs)
+
+
+class SeleniumResponse(HtmlResponse):
+
+    @property
+    def interact(self):
+        """Shortcut to the WebDriver"""
+        return self.meta['driver']
+
+    def click(self, query):
+        """Clicks on an element specified by query, and reloads the pages source into to the body"""
+        try:
+            xpath_query = HTMLTranslator().css_to_xpath(query)
+        except SelectorSyntaxError:
+            xpath_query = query
+        self.interact.find_element_by_xpath(xpath_query).click()
+        if self.request.wait_until:
+            WebDriverWait(self.interact, self.request.wait_time).until(self.request.wait_until)
+        return self.replace(url=self.interact.current_url,
+                            body=str.encode(self.interact.page_source))

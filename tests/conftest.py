@@ -24,3 +24,13 @@ def crawler(request):
         'SELENIUM_DRIVER_ARGUMENTS': [arg for arg in request.param[2].split(', ')]
     }
     return Crawler(spidercls=TestSpider, settings=settings)
+
+
+@pytest.fixture
+def invalid_crawler(request):
+    settings = {
+        'SELENIUM_DRIVER_NAME': 'edge',
+        'SELENIUM_DRIVER_EXECUTABLE_PATH': which('edgedriver'),
+        'SELENIUM_DRIVER_ARGUMENTS': [],
+    }
+    return Crawler(spidercls=TestSpider, settings=settings)

@@ -4,10 +4,9 @@ from importlib import import_module
 from os.path import abspath, join, dirname
 
 from scrapy.exceptions import NotConfigured
-from scrapy.http import HtmlResponse
 from selenium.webdriver.support.ui import WebDriverWait
 
-from .http import SeleniumRequest
+from .http import SeleniumRequest, SeleniumResponse
 
 
 class SeleniumMiddleware:
@@ -40,7 +39,7 @@ class SeleniumMiddleware:
         driver_options_class = getattr(driver_options_module, 'Options')
 
         driver_options = driver_options_class()
-        if browser_executable_path:
+        if browser_executable_path:  # pragma: no cover
             driver_options.binary_location = browser_executable_path
         if '--block-ads' in driver_arguments:
             self._block_ads = True
@@ -96,9 +95,9 @@ class SeleniumMiddleware:
         # Expose the driver via the "meta" attribute
         request.meta.update({'driver': driver})
 
-        return HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
+        return SeleniumResponse(driver.current_url, body=body, encoding='utf-8', request=request)
 
     def process_spider_output(self, response, result, spider):
         """Shutdown the driver when spider is finished processing the response"""
-        response.meta['driver'].quit()
+        response.interact.quit()
         return result
