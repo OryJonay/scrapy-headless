@@ -98,6 +98,8 @@ class SeleniumMiddleware:
         return SeleniumResponse(driver.current_url, body=body, encoding='utf-8', request=request)
 
     def process_spider_output(self, response, result, spider):
+        for i in result:
+            yield i
         """Shutdown the driver when spider is finished processing the response"""
         response.interact.quit()
         return result
